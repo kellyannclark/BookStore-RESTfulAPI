@@ -1,0 +1,32 @@
+
+[{
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "genre": "Classic",
+    "publication_year": 1960,
+    "isbn": "978-0-06-112008-4",
+    "publisher": "HarperCollins",
+    "price": 12.99
+  },
+
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "genre": "Classic",
+    "publication_year": 1925,
+    "isbn": "978-0-7432-7356-5",
+    "publisher": "Scribner",
+    "price": 10.99
+  },
+
+    
+  {
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "author": "J.K. Rowling",
+    "genre": "Fantasy",
+    "publication_year": 1997,
+    "isbn": "978-0-590-35340-3",
+    "publisher": "Scholastic",
+    "price": 14.99
+  }]
+  
