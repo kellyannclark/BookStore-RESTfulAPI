@@ -5,7 +5,7 @@ const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
 const getUsers = async (req, res) => {
-    //#swagger.tags=["Authors"]
+    //#swagger.tags=["Users"]
     const result = await mongodb.getDatabase().db().collection("users").find();
     result.toArray().then((users) => {
        res.setHeader("Content-Type", "application/json");
@@ -14,7 +14,7 @@ const getUsers = async (req, res) => {
 }
 
 const getUser= async (req, res) => {
-    //#swagger.tags=["Book"]
+    //#swagger.tags=["Users"]
     const userId = new ObjectId(req.params.id);
     const result = await mongodb.getDatabase().db().collection("users").find({_id: userId});
     result.toArray().then((users) => {
@@ -29,7 +29,7 @@ const getUser= async (req, res) => {
 
 
 const createUser = async (req, res) => {
-    //#swagger.tags=["Book"]
+    //#swagger.tags=["Users"]
     const bookStore = {
         title: req.body.title,
         author: req.body.author,
@@ -48,7 +48,7 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    //#swagger.tags=["Book"]
+    //#swagger.tags=["Users"]
     const userId = new ObjectId(req.params.id);
     const user = {
         title: req.body.title,
@@ -70,7 +70,7 @@ const updateUser = async (req, res) => {
 }  
 
 const deleteUser = async (req, res) => {
-    //#swagger.tags=["Authors"]
+    //#swagger.tags=["Users"]
     try {
       const userId = new ObjectId(req.params.id);
       console.log("Deleting user with ID:", userId); // line for debugging
