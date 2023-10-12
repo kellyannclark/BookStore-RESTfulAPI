@@ -1,7 +1,8 @@
-const routes = require('express').Router();
-const bookController = require('../controllers/book.js');
+const router = require('express').Router();
 
-routes.get('/', bookController.book1Route);
-routes.get('/book2', bookController.book2Route);
+router.use("/", require("./swagger"));
+router.use("/book", require("./book")); 
+router.use("/bookStore", require("./bookStore"));
+router.use("/users", require("./users"));
 
-module.exports = routes;
+module.exports = router;
