@@ -2,9 +2,7 @@
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => { //if it gets a request for /, respond hello
-    res.send('Hello Kelly')
-});
+app.use('/', require('./routes/index'));
 
 const port = 3000;
 
