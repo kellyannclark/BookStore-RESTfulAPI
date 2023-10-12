@@ -5,33 +5,33 @@ const router = express.Router();
 const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
-const getBooks = async (req, res) => {
+const getbookStores = async (req, res) => {
     //#swagger.tags=["Authors"]
-    const result = await mongodb.getDatabase().db().collection("book").find();
-    result.toArray().then((book) => {
+    const result = await mongodb.getDatabase().db().collection("bookStore").find();
+    result.toArray().then((bookStore) => {
        res.setHeader("Content-Type", "application/json");
-       res.status(200).json(book);
+       res.status(200).json(bookStore);
     });
 }
 
-const getBook = async (req, res) => {
+const getbookStore= async (req, res) => {
     //#swagger.tags=["Book"]
     const userId = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection("book").find({_id: userId});
-    result.toArray().then((book) => {
+    const result = await mongodb.getDatabase().db().collection("bookStore").find({_id: userId});
+    result.toArray().then((bookStore) => {
         if (authors.length > 0) {
-            const book = book[0];
-            res.status(200).json({ book });
+            const book = bookStore[0];
+            res.status(200).json({ bookStore });
         } else {
-            res.status(404).json("Book not found");
+            res.status(404).json("BookStore not found");
         }
     });
 };
 
 
-const createBook = async (req, res) => {
+const createbookStore = async (req, res) => {
     //#swagger.tags=["Book"]
-    const book = {
+    const bookStore = {
         title: req.body.title,
         author: req.body.author,
         genre: req.body.genre,
@@ -40,18 +40,18 @@ const createBook = async (req, res) => {
         publisher: req.body.publisher,
         price: parseInt(req.body.price)
     };
-    const response = await mongodb.getDatabase().db().collection("book").insertOne(book);
+    const response = await mongodb.getDatabase().db().collection("bookStore").insertOne(bookStore);
     if (response.acknowledged > 0) {
         res.status(204).send();
      } else {
-        res.status(500).json(response.error || "Some error occurred while updating the book.");
+        res.status(500).json(response.error || "Some error occurred while updating the bookStore.");
     }
 };
 
-const updateBook = async (req, res) => {
+const updatebookStore = async (req, res) => {
     //#swagger.tags=["Book"]
     const userId = new ObjectId(req.params.id);
-    const book = {
+    const bookStore = {
         title: req.body.title,
         author: req.body.author,
         genre: req.body.genre,
@@ -62,38 +62,38 @@ const updateBook = async (req, res) => {
 
     };
 
-    const response = await mongodb.getDatabase().db().collection("book").replaceOne({ _id: userId } ,book);
+    const response = await mongodb.getDatabase().db().collection("bookStore").replaceOne({ _id: userId } ,bookStore);
         if (response.modifiedCount > 0) {
             res.status(204).send();
         } else {
-            res.status(500).json(response.error || "Some error occurred while updating the book.");
+            res.status(500).json(response.error || "Some error occurred while updating the bookStore.");
         };
 }  
 
-const deleteBook = async (req, res) => {
+const deletebookStore = async (req, res) => {
     //#swagger.tags=["Authors"]
     try {
       const userId = new ObjectId(req.params.id);
-      console.log("Deleting book with ID:", userId); // line for debugging
-      const response = await mongodb.getDatabase().db().collection("book").deleteOne({ _id: userId });
+      console.log("Deleting bookStore with ID:", userId); // line for debugging
+      const response = await mongodb.getDatabase().db().collection("bookStore").deleteOne({ _id: userId });
   
       if (response.deletedCount > 0) {
         res.status(204).send();
       } else {
-        res.status(404).json("book not found");
+        res.status(404).json("bookStore not found");
       }
     } catch (error) {
-      console.error("Error deleting book:", error);
-      res.status(500).json("Some error occurred while deleting the book.");
+      console.error("Error deleting bookStore:", error);
+      res.status(500).json("Some error occurred while deleting the bookStore.");
     }
   };
   
 
 
 module.exports = {
-    getBook,
-    getBook,
-    createBook,
-    updateBook,
-    deleteBook,
+    getbookStores,
+    getbookStore,
+    createbookStore,
+    updatebookStore,
+    deletebookStore,
 };

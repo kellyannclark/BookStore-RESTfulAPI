@@ -91,7 +91,7 @@ const deleteBook = async (req, res) => {
 
 
 module.exports = {
-    getBook,
+    getBooks,
     getBook,
     createBook,
     updateBook,
