@@ -6,7 +6,7 @@ const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
 const getBooks = async (req, res) => {
-    //#swagger.tags=["Authors"]
+    //#swagger.tags=["Book"]
     const result = await mongodb.getDatabase().db().collection("book").find();
     result.toArray().then((book) => {
        res.setHeader("Content-Type", "application/json");
@@ -71,7 +71,7 @@ const updateBook = async (req, res) => {
 }  
 
 const deleteBook = async (req, res) => {
-    //#swagger.tags=["Authors"]
+    //#swagger.tags=["Book"]
     try {
       const userId = new ObjectId(req.params.id);
       console.log("Deleting book with ID:", userId); // line for debugging
