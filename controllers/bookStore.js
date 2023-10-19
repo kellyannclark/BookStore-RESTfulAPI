@@ -19,8 +19,8 @@ const getbookStore= async (req, res) => {
     const userId = new ObjectId(req.params.id);
     const result = await mongodb.getDatabase().db().collection("bookStore").find({_id: userId});
     result.toArray().then((bookStore) => {
-        if (authors.length > 0) {
-            const book = bookStore[0];
+        if (bookStore.length > 0) {
+            const bookStore = bookStore[0];
             res.status(200).json({ bookStore });
         } else {
             res.status(404).json("BookStore not found");
@@ -32,13 +32,10 @@ const getbookStore= async (req, res) => {
 const createbookStore = async (req, res) => {
     //#swagger.tags=["Book"]
     const bookStore = {
-        title: req.body.title,
-        author: req.body.author,
-        genre: req.body.genre,
-        publication_year: parseInt(req.body.publication_year),
-        isbn: parseInt(req.body.isbn),
-        publisher: req.body.publisher,
-        price: parseInt(req.body.price)
+        name: req.body.name,
+        location: req.body.location,
+        phoneNumber: req.body.phoneNumber
+
     };
     const response = await mongodb.getDatabase().db().collection("bookStore").insertOne(bookStore);
     if (response.acknowledged > 0) {
@@ -52,13 +49,10 @@ const updatebookStore = async (req, res) => {
     //#swagger.tags=["Book"]
     const userId = new ObjectId(req.params.id);
     const bookStore = {
-        title: req.body.title,
-        author: req.body.author,
-        genre: req.body.genre,
-        publication_year: parseInt(req.body.publication_year),
-        isbn: parseInt(req.body.isbn),
-        publisher: req.body.publisher,
-        price: parseInt(req.body.price)
+        name: req.body.name,
+        location: req.body.location,
+        phoneNumber: req.body.phoneNumber
+
 
     };
 
