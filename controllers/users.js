@@ -18,7 +18,7 @@ const getUser= async (req, res) => {
     const userId = new ObjectId(req.params.id);
     const result = await mongodb.getDatabase().db().collection("users").find({_id: userId});
     result.toArray().then((users) => {
-        if (authors.length > 0) {
+        if (users.length > 0) {
             const user = user[0];
             res.status(200).json({user});
         } else {
@@ -31,13 +31,12 @@ const getUser= async (req, res) => {
 const createUser = async (req, res) => {
     //#swagger.tags=["Users"]
     const bookStore = {
-        title: req.body.title,
-        author: req.body.author,
-        genre: req.body.genre,
-        publication_year: parseInt(req.body.publication_year),
-        isbn: parseInt(req.body.isbn),
-        publisher: req.body.publisher,
-        price: parseInt(req.body.price)
+        userName: req.body.userName,
+        passWord: req.body.passWord,
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+
     };
     const response = await mongodb.getDatabase().db().collection("users").insertOne(user);
     if (response.acknowledged > 0) {
@@ -51,17 +50,15 @@ const updateUser = async (req, res) => {
     //#swagger.tags=["Users"]
     const userId = new ObjectId(req.params.id);
     const user = {
-        title: req.body.title,
-        author: req.body.author,
-        genre: req.body.genre,
-        publication_year: parseInt(req.body.publication_year),
-        isbn: parseInt(req.body.isbn),
-        publisher: req.body.publisher,
-        price: parseInt(req.body.price)
+        userName: req.body.userName,
+        passWord: req.body.passWord,
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
 
     };
 
-    const response = await mongodb.getDatabase().db().collection("users").replaceOne({ _id: userId } ,bookStore);
+    const response = await mongodb.getDatabase().db().collection("users").replaceOne({ _id: userId } ,users);
         if (response.modifiedCount > 0) {
             res.status(204).send();
         } else {
