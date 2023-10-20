@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
 router.use("/book", require("./book")); 
 router.use("/bookStore", require("./bookStore"));
 router.use("/users", require("./users"));
+router.use("/payment",require("./payment"));
 
 module.exports = router;
 
