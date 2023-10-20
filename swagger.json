@@ -12,6 +12,19 @@
     "https"
   ],
   "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Hello World"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api-docs": {
       "get": {
         "description": "",
@@ -212,25 +225,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "title": {
+                "name": {
                   "example": "any"
                 },
-                "author": {
+                "location": {
                   "example": "any"
                 },
-                "genre": {
-                  "example": "any"
-                },
-                "publication_year": {
-                  "example": "any"
-                },
-                "isbn": {
-                  "example": "any"
-                },
-                "publisher": {
-                  "example": "any"
-                },
-                "price": {
+                "phoneNumber": {
                   "example": "any"
                 }
               }
@@ -288,25 +289,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "title": {
+                "name": {
                   "example": "any"
                 },
-                "author": {
+                "location": {
                   "example": "any"
                 },
-                "genre": {
-                  "example": "any"
-                },
-                "publication_year": {
-                  "example": "any"
-                },
-                "isbn": {
-                  "example": "any"
-                },
-                "publisher": {
-                  "example": "any"
-                },
-                "price": {
+                "phoneNumber": {
                   "example": "any"
                 }
               }
@@ -375,25 +364,19 @@
             "schema": {
               "type": "object",
               "properties": {
-                "title": {
+                "userName": {
                   "example": "any"
                 },
-                "author": {
+                "passWord": {
                   "example": "any"
                 },
-                "genre": {
+                "email": {
                   "example": "any"
                 },
-                "publication_year": {
+                "firstName": {
                   "example": "any"
                 },
-                "isbn": {
-                  "example": "any"
-                },
-                "publisher": {
-                  "example": "any"
-                },
-                "price": {
+                "lastName": {
                   "example": "any"
                 }
               }
@@ -451,25 +434,19 @@
             "schema": {
               "type": "object",
               "properties": {
-                "title": {
+                "userName": {
                   "example": "any"
                 },
-                "author": {
+                "passWord": {
                   "example": "any"
                 },
-                "genre": {
+                "email": {
                   "example": "any"
                 },
-                "publication_year": {
+                "firstName": {
                   "example": "any"
                 },
-                "isbn": {
-                  "example": "any"
-                },
-                "publisher": {
-                  "example": "any"
-                },
-                "price": {
+                "lastName": {
                   "example": "any"
                 }
               }
@@ -488,6 +465,151 @@
       "delete": {
         "tags": [
           "Users"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/payment/": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "example": "any"
+                },
+                "amount": {
+                  "example": "any"
+                },
+                "paymentMethod": {
+                  "example": "any"
+                },
+                "paymentDate": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/payment/{id}": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Payments"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "example": "any"
+                },
+                "amount": {
+                  "example": "any"
+                },
+                "paymentMethod": {
+                  "example": "any"
+                },
+                "paymentDate": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Payments"
         ],
         "description": "",
         "parameters": [

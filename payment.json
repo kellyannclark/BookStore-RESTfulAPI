@@ -1,8 +1,9 @@
 [
-   { "userName":"Lilly" ,
+   { 
+        "userName":"Lilly" ,
         "amount": "$200",
         "paymentMethod":"cash",
         "paymentDate":"2023-09-19"
 
-} 
+   } 
 ]

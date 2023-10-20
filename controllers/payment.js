@@ -6,22 +6,22 @@ const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
 const getPayments = async (req, res) => {
-    //#swagger.tags=["Authors"]
+    //#swagger.tags=["Payments"]
     const result = await mongodb.getDatabase().db().collection("payments").find();
-    result.toArray().then((payment) => {
+    result.toArray().then((payments) => {
        res.setHeader("Content-Type", "application/json");
-       res.status(200).json(payment);
+       res.status(200).json(payments);
     });
 }
 
 const getPayment = async (req, res) => {
-    //#swagger.tags=["Book"]
+    //#swagger.tags=["Payments"]
     const userId = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection("paymets").find({_id: userId});
-    result.toArray().then((payment) => {
-        if (payment.length > 0) {
-            const payment= payment[0];
-            res.status(200).json({ payment});
+    const result = await mongodb.getDatabase().db().collection("payments").find({_id: userId});
+    result.toArray().then((payments) => {
+        if (payments.length > 0) {
+            const payments= payments[0];
+            res.status(200).json({ payments});
         } else {
             res.status(404).json("payment not found");
         }
@@ -30,14 +30,14 @@ const getPayment = async (req, res) => {
 
 
 const createPayment= async (req, res) => {
-    //#swagger.tags=["Book"]
+    //#swagger.tags=["Payments"]
     const payment = {
         userName: req.body.userName,
         amount: req.body.amount,
         paymentMethod:req.body.paymentMethod,
         paymentDate:req.body.paymentDate
     };
-    const response = await mongodb.getDatabase().db().collection("payment").insertOne(payment);
+    const response = await mongodb.getDatabase().db().collection("payments").insertOne(payment);
     if (response.acknowledged > 0) {
         res.status(204).send();
      } else {
@@ -46,7 +46,7 @@ const createPayment= async (req, res) => {
 };
 
 const updatePayment = async (req, res) => {
-    //#swagger.tags=["Book"]
+    //#swagger.tags=["Payments"]
     const userId = new ObjectId(req.params.id);
     const payment= {
         userName: req.body.userName,
@@ -55,7 +55,7 @@ const updatePayment = async (req, res) => {
         paymentDate:req.body.paymentDate
     };
 
-    const response = await mongodb.getDatabase().db().collection("payment").replaceOne({ _id: userId } ,payment);
+    const response = await mongodb.getDatabase().db().collection("payments").replaceOne({ _id: userId } ,payment);
         if (response.modifiedCount > 0) {
             res.status(204).send();
         } else {
@@ -64,11 +64,11 @@ const updatePayment = async (req, res) => {
 }  
 
 const deletePayment = async (req, res) => {
-    //#swagger.tags=["Authors"]
+    //#swagger.tags=["Payments"]
     try {
       const userId = new ObjectId(req.params.id);
       console.log("Deleting payment with ID:", userId); // line for debugging
-      const response = await mongodb.getDatabase().db().collection("payment").deleteOne({ _id: userId });
+      const response = await mongodb.getDatabase().db().collection("payments").deleteOne({ _id: userId });
   
       if (response.deletedCount > 0) {
         res.status(204).send();
@@ -76,7 +76,7 @@ const deletePayment = async (req, res) => {
         res.status(404).json("payment not found");
       }
     } catch (error) {
-      console.error("Error deleting book:", error);
+      console.error("Error deleting payment:", error);
       res.status(500).json("Some error occurred while deleting the payment.");
     }
   };

@@ -19,7 +19,7 @@ const getBook = async (req, res) => {
     const userId = new ObjectId(req.params.id);
     const result = await mongodb.getDatabase().db().collection("book").find({_id: userId});
     result.toArray().then((book) => {
-        if (authors.length > 0) {
+        if (book.length > 0) {
             const book = book[0];
             res.status(200).json({ book });
         } else {

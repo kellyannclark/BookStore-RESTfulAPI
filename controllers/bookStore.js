@@ -5,7 +5,7 @@ const router = express.Router();
 const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
-const getbookStores = async (req, res) => {
+const getBookStores = async (req, res) => {
     //#swagger.tags=["bookStore"]
     const result = await mongodb.getDatabase().db().collection("bookStore").find();
     result.toArray().then((bookStore) => {
@@ -14,7 +14,7 @@ const getbookStores = async (req, res) => {
     });
 }
 
-const getbookStore= async (req, res) => {
+const getBookStore= async (req, res) => {
     //#swagger.tags=["bookStore"]
     const userId = new ObjectId(req.params.id);
     const result = await mongodb.getDatabase().db().collection("bookStore").find({_id: userId});
@@ -29,7 +29,7 @@ const getbookStore= async (req, res) => {
 };
 
 
-const createbookStore = async (req, res) => {
+const createBookStore = async (req, res) => {
     //#swagger.tags=["bookStore"]
     const bookStore = {
         name: req.body.name,
@@ -45,7 +45,7 @@ const createbookStore = async (req, res) => {
     }
 };
 
-const updatebookStore = async (req, res) => {
+const updateBookStore = async (req, res) => {
     //#swagger.tags=["bookStore"]
     const userId = new ObjectId(req.params.id);
     const bookStore = {
@@ -64,7 +64,7 @@ const updatebookStore = async (req, res) => {
         };
 }  
 
-const deletebookStore = async (req, res) => {
+const deleteBookStore = async (req, res) => {
     //#swagger.tags=["bookStore"]
     try {
       const userId = new ObjectId(req.params.id);
@@ -85,9 +85,9 @@ const deletebookStore = async (req, res) => {
 
 
 module.exports = {
-    getbookStores,
-    getbookStore,
-    createbookStore,
-    updatebookStore,
-    deletebookStore,
+    getBookStores,
+    getBookStore,
+    createBookStore,
+    updateBookStore,
+    deleteBookStore,
 };

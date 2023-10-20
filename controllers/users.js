@@ -1,4 +1,3 @@
-
 const express = require("express");
 const router = express.Router();
 const mongodb = require("../data/database");
@@ -8,41 +7,39 @@ const getUsers = async (req, res) => {
     //#swagger.tags=["Users"]
     const result = await mongodb.getDatabase().db().collection("users").find();
     result.toArray().then((users) => {
-       res.setHeader("Content-Type", "application/json");
-       res.status(200).json(users);
+        res.setHeader("Content-Type", "application/json");
+        res.status(200).json(users);
     });
 }
 
-const getUser= async (req, res) => {
+const getUser = async (req, res) => {
     //#swagger.tags=["Users"]
     const userId = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection("users").find({_id: userId});
+    const result = await mongodb.getDatabase().db().collection("users").find({ _id: userId });
     result.toArray().then((users) => {
         if (users.length > 0) {
-            const user = user[0];
-            res.status(200).json({user});
+            const user = users[0]; // Fixed the variable name here
+            res.status(200).json({ user });
         } else {
-            res.status(404).json("user not found");
+            res.status(404).json("User not found"); // Fixed the message here
         }
     });
 };
 
-
 const createUser = async (req, res) => {
     //#swagger.tags=["Users"]
-    const bookStore = {
+    const user = {
         userName: req.body.userName,
         passWord: req.body.passWord,
         email: req.body.email,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-
     };
     const response = await mongodb.getDatabase().db().collection("users").insertOne(user);
     if (response.acknowledged > 0) {
         res.status(204).send();
-     } else {
-        res.status(500).json(response.error || "Some error occurred while updating the bookStore.");
+    } else {
+        res.status(500).json(response.error || "Some error occurred while creating the user."); // Fixed the message here
     }
 };
 
@@ -55,36 +52,33 @@ const updateUser = async (req, res) => {
         email: req.body.email,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-
     };
 
-    const response = await mongodb.getDatabase().db().collection("users").replaceOne({ _id: userId } ,users);
-        if (response.modifiedCount > 0) {
-            res.status(204).send();
-        } else {
-            res.status(500).json(response.error || "Some error occurred while updating the user.");
-        };
-}  
+    const response = await mongodb.getDatabase().db().collection("users").replaceOne({ _id: userId }, user);
+    if (response.modifiedCount > 0) {
+        res.status(204).send();
+    } else {
+        res.status(500).json(response.error || "Some error occurred while updating the user.");
+    }
+}
 
 const deleteUser = async (req, res) => {
     //#swagger.tags=["Users"]
     try {
-      const userId = new ObjectId(req.params.id);
-      console.log("Deleting user with ID:", userId); // line for debugging
-      const response = await mongodb.getDatabase().db().collection("users").deleteOne({ _id: userId });
-  
-      if (response.deletedCount > 0) {
-        res.status(204).send();
-      } else {
-        res.status(404).json("user not found");
-      }
-    } catch (error) {
-      console.error("Error deleting user:", error);
-      res.status(500).json("Some error occurred while deleting the user.");
-    }
-  };
-  
+        const userId = new ObjectId(req.params.id);
+        console.log("Deleting user with ID:", userId); // line for debugging
+        const response = await mongodb.getDatabase().db().collection("users").deleteOne({ _id: userId });
 
+        if (response.deletedCount > 0) {
+            res.status(204).send();
+        } else {
+            res.status(404).json("User not found"); // Fixed the message here
+        }
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        res.status(500).json("Some error occurred while deleting the user.");
+    }
+}
 
 module.exports = {
     getUsers,
@@ -93,5 +87,3 @@ module.exports = {
     updateUser,
     deleteUser,
 };
-
-
