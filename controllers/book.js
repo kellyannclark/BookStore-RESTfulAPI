@@ -31,22 +31,41 @@ const getBook = async (req, res) => {
 
 const createBook = async (req, res) => {
     //#swagger.tags=["Book"]
+    const bookData = req.body;
+    
+    // validation
+    if (!bookData.title || !bookData.author || !bookData.genre) {
+        return res.status(400).json("Title, author, and genre are required.");
+    }
+
+    // Validate numeric fields
+    const numericFields = ['publication_year', 'isbn', 'price'];
+    for (const field of numericFields) {
+        if (bookData[field] !== undefined && isNaN(bookData[field])) {
+            return res.status(400).json(`${field} must be a number.`);
+        }
+    }
+
+    // Proceed to create the book
     const book = {
-        title: req.body.title,
-        author: req.body.author,
-        genre: req.body.genre,
-        publication_year: parseInt(req.body.publication_year),
-        isbn: parseInt(req.body.isbn),
-        publisher: req.body.publisher,
-        price: parseInt(req.body.price)
+        title: bookData.title,
+        author: bookData.author,
+        genre: bookData.genre,
+        publication_year: parseInt(bookData.publication_year),
+        isbn: parseInt(bookData.isbn),
+        publisher: bookData.publisher,
+        price: parseInt(bookData.price)
     };
+
     const response = await mongodb.getDatabase().db().collection("book").insertOne(book);
+
     if (response.acknowledged > 0) {
         res.status(204).send();
-     } else {
-        res.status(500).json(response.error || "Some error occurred while updating the book.");
+    } else {
+        res.status(500).json(response.error || "Some error occurred while creating the book.");
     }
 };
+
 
 const updateBook = async (req, res) => {
     //#swagger.tags=["Book"]

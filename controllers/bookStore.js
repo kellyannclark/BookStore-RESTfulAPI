@@ -31,6 +31,14 @@ const getBookStore= async (req, res) => {
 
 const createBookStore = async (req, res) => {
     //#swagger.tags=["bookStore"]
+    
+    const { name, location, phoneNumber } = req.body;
+
+    //  validation
+    if (!name || !location || !phoneNumber) {
+      return res.status(400).json('Invalid data. All fields are required.');
+    }
+
     const bookStore = {
         name: req.body.name,
         location: req.body.location,
@@ -44,6 +52,7 @@ const createBookStore = async (req, res) => {
         res.status(500).json(response.error || "Some error occurred while updating the bookStore.");
     }
 };
+
 
 const updateBookStore = async (req, res) => {
     //#swagger.tags=["bookStore"]

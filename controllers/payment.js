@@ -31,6 +31,13 @@ const getPayment = async (req, res) => {
 
 const createPayment= async (req, res) => {
     //#swagger.tags=["Payments"]
+
+    const { userName, amount, paymentMethod, paymentDate } = req.body;
+
+    // validation
+    if (!userName || !amount || !paymentMethod || !paymentDate) {
+      return res.status(400).json('Invalid data. All fields are required.');
+    }
     const payment = {
         userName: req.body.userName,
         amount: req.body.amount,

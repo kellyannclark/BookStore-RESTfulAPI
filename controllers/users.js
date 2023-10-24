@@ -23,8 +23,16 @@ const getUser = async (req, res) => {
   };
   
 
-const createUser = async (req, res) => {
+  const createUser = async (req, res) => {
     //#swagger.tags=["Users"]
+
+    const { userName, passWord, email, firstName, lastName } = req.body;
+
+    // data validation
+    if (!userName || !passWord || !email || !firstName || !lastName) {
+      return res.status(400).json('Invalid data. All fields are required.');
+    }
+  
     const user = {
         userName: req.body.userName,
         passWord: req.body.passWord,

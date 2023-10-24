@@ -66,7 +66,10 @@ app.get('/github/callback', passport.authenticate('github', {
   res.redirect('/');
 });
 
-
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
 
 mongodb.initDb((err) => {
   if (err) {
