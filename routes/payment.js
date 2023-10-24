@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const paymentController = require('../controllers/payment.js');
+const { isAuthenticated } = require("../middleware/authenticate");
 
 router.get('/', paymentController.getPayments);
-router.get('/id:', paymentController.getPayments);
-router.post("/", paymentController.createPayment);
-router.put("/:id", paymentController.updatePayment);
-router.delete("/:id", paymentController.deletePayment);
+router.get('/:id', paymentController.getPayments);
+router.post("/", isAuthenticated, paymentController.createPayment);
+router.put("/:id", isAuthenticated, paymentController.updatePayment);
+router.delete("/:id", isAuthenticated, paymentController.deletePayment);
 
 module.exports = router;

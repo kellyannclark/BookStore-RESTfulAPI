@@ -17,14 +17,11 @@ const getUser = async (req, res) => {
     const userId = new ObjectId(req.params.id);
     const result = await mongodb.getDatabase().db().collection("users").find({ _id: userId });
     result.toArray().then((users) => {
-        if (users.length > 0) {
-            const user = users[0]; // Fixed the variable name here
-            res.status(200).json({ user });
-        } else {
-            res.status(404).json("User not found"); // Fixed the message here
-        }
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(users[0]);
     });
-};
+  };
+  
 
 const createUser = async (req, res) => {
     //#swagger.tags=["Users"]
