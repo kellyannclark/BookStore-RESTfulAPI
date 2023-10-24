@@ -52,23 +52,42 @@ const createPayment= async (req, res) => {
     }
 };
 
+
+
 const updatePayment = async (req, res) => {
+  try {
     //#swagger.tags=["Payments"]
-    const userId = new ObjectId(req.params.id);
-    const payment= {
-        userName: req.body.userName,
-        amount: req.body.amount,
-        paymentMethod:req.body.paymentMethod,
-        paymentDate:req.body.paymentDate
+    const userId = req.params.id;
+
+    // Check if the userId is a valid ObjectId
+    if (!ObjectId.isValid(userId)) {
+      return res.status(400).json("Invalid user ID.");
+    }
+
+    
+    const payment = {
+      userName: req.body.userName,
+      amount: req.body.amount,
+      paymentMethod: req.body.paymentMethod,
+      paymentDate: req.body.paymentDate,
     };
 
-    const response = await mongodb.getDatabase().db().collection("payments").replaceOne({ _id: userId } ,payment);
-        if (response.modifiedCount > 0) {
-            res.status(204).send();
-        } else {
-            res.status(500).json(response.error || "Some error occurred while updating the payment.");
-        };
-}  
+    const response = await mongodb.getDatabase().db().collection("payments").replaceOne(
+      { _id: new ObjectId(userId) },
+      payment
+    );
+
+    if (response.modifiedCount > 0) {
+      return res.status(204).send();
+    } else {
+      return res.status(500).json(response.error || "Some error occurred while updating the payment.");
+    }
+  } catch (error) {
+    console.error("Error updating payment:", error);
+    return res.status(500).json("Some error occurred while updating the payment.");
+  }
+};
+
 
 const deletePayment = async (req, res) => {
     //#swagger.tags=["Payments"]
